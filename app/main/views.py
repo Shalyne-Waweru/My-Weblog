@@ -18,3 +18,12 @@ def travel():
     View root page function that returns the travel posts page and its data
     '''
     return render_template('travel.html')
+
+# LIFESTYLE POSTS PAGE
+@main.route('/lifestyle')
+def lifestyle():
+
+    '''
+    View root page function that returns the lifestyle posts page and its data
+    '''
+    return render_template('lifestyle.html')
