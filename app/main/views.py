@@ -27,3 +27,12 @@ def lifestyle():
     View root page function that returns the lifestyle posts page and its data
     '''
     return render_template('lifestyle.html')
+
+# CREATE POSTS PAGE
+@main.route('/create')
+def create():
+
+    '''
+    View root page function that returns the create posts page and its data
+    '''
+    return render_template('create.html')
