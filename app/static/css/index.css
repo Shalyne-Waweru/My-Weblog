@@ -6,6 +6,54 @@ body {
   background-color: white;
 }
 
+/* Intro Section */
+.intro img {
+  width: 100%;
+  height: 791px;
+  position: relative;
+  text-align: center;
+}
+
+.intro-txt {
+  width: 400px;
+  height: 200px;
+  border: 5px solid #9EBD99;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  padding-top: 50px;
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+}
+
+.charm {
+  font-family: 'Charm', cursive;
+}
+
+.explore {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.explore h5 {
+  font-family: 'Charm', cursive;
+  color: white;
+  font-size: 25px;
+}
+
+.fas {
+  color: white;
+  font-size: 30px;
+  margin-left: 15px;
+  background-color: #9EBD99;
+  padding: 10px;
+  border-radius: 5px;
+}
+
 /* About Me Section */
 #about {
   height: 100%;
