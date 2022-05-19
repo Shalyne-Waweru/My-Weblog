@@ -1,0 +1,95 @@
+/* Footer Section */
+.footer {
+  padding-top: 50px;
+  height: 100%;
+  background-color: #184B0F;
+  padding-bottom: 20px;
+}
+
+.fab {
+  margin-top: 20px;
+  font-size: 30px;
+  width: 20px;
+  text-align: center;
+  text-decoration: none;
+  margin-left: 30px;
+  color: white;
+  cursor: pointer;
+}
+
+.fab:hover {
+    color: #E8F1E6;
+    text-decoration: none;
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+  margin-right: 40px;
+}
+
+.footer p {
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+/* Subscribe Section */
+.newsletter {
+  padding: 40px 20px;
+  background-color: white;
+  width: 350px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.newsletter h5 {
+  font-weight: bold;
+  text-align: center;
+}
+
+.newsletter p {
+  color: black;
+  text-align: left;
+  font-size: 15px;
+  margin-left: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: #E8F1E6;
+  border: 1px solid black;
+  height: 40px;
+  margin-top: 10px;
+  width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input::placeholder{
+  font-size: 15px;
+  text-indent: 15px;
+}
+
+.submit-btn {
+  width: 130px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  cursor: pointer;
+}
