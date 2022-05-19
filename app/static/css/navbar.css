@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Charm&display=swap');
+
+/* Navbar Section */
+.navbar {
+  height: 100px;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #184B0F;
+}
+
+.logo{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.logo p {
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  margin-top: 5px;
+}
+
+.navbar ul {
+  list-style: none;
+}
+
+.navbar ul li{
+  display: inline-block;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: white;
+  margin-left: 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.active, .link:hover {
+  border: 2px solid #C4C4C4;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.username {
+  color: white;
+  border: 1px solid #C4C4C4;
+  padding: 10px;
+}
+
+.login-btn {
+  border: none;
+  padding: 10px;
+  background-color: #9EBD99;
+  border-radius: 5px;
+}
+
+.login-btn a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: 'Charm', cursive;
+}
+
+.login-btn a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+.login-btn:hover {
+  background-color: white;
+}
+
+.login-btn:hover a {
+  color: black;
+  font-weight: bold;
+}
+
+/* Intro Section */
+.intro img {
+  width: 100%;
+  height: 791px;
+  position: relative;
+  text-align: center;
+}
+
+.intro-txt {
+  width: 400px;
+  height: 200px;
+  border: 5px solid #9EBD99;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  padding-top: 50px;
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+}
+
+.charm {
+  font-family: 'Charm', cursive;
+}
+
+.explore {
+  position: absolute;
+  top: 90%;
+  left: 52%;
+  transform: translate(-50%, -50%);
+}
+
+.explore h5 {
+  font-family: 'Charm', cursive;
+  color: white;
+  font-size: 25px;
+}
+
+.fas {
+  color: white;
+  font-size: 30px;
+  margin-left: 15px;
+  background-color: #9EBD99;
+  padding: 10px;
+  border-radius: 5px;
+}
