@@ -65,7 +65,7 @@ class Blog(db.Model):
 
     @classmethod
     def get_blogs(cls,cat):
-        blogs = Blog.query.filter_by(category=cat).all()
+        blogs = Blog.query.filter_by(category=cat).limit(1).all()
         return blogs
 
     def __repr__(self):

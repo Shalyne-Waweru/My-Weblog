@@ -131,7 +131,7 @@
 }
 
 .col-md-7 {
-  overflow: scroll;
+  min-height: 30% !important;
 }
 
 .col-md-7 h3 {

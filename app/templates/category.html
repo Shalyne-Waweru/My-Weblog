@@ -13,15 +13,15 @@
   <!--Stylesheets-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <link href="{{url_for('static',filename='css/travel.css')}}" rel="stylesheet">
+  <link href="{{url_for('static',filename='css/category.css')}}" rel="stylesheet">
 
-  <title>Lifestyle Page</title>
+  <title>Travel Page</title>
 </head>
 
 <body>
   <!-- Navbar section -->
   <div class="nav-background">
-    <img src="../static/images/thumbnail-7.jpg" alt="Nav  Background Image" />
+    <img src="../static/images/thumbnail-4.jpg" alt="Nav  Backgrounf Image" />
   </div>
 
   <header class="navbar">
@@ -32,8 +32,8 @@
 
     <ul id="nav-btns">
       <li><a class="link active" href="{{ url_for('main.index') }}">HOME</a></li>
-      <li><a class="link" href="{{ url_for('main.lifestyle') }}">LIFESTYLE</a></li>
-      <li><a class="link" href="{{ url_for('main.travel') }}">TRAVEL</a></li>
+      <li><a class="link" href="/category/Lifestyle">LIFESTYLE</a></li>
+      <li><a class="link" href="/category/Travel">TRAVEL</a></li>
       {% if current_user.is_authenticated %}
       <li><a class="link" href="{{ url_for('main.create') }}">CREATE</a></li>
       <li><a class="link" href="{{ url_for('main.profile', uname = current_user.username) }}">PROFILE</a></li>
@@ -53,37 +53,25 @@
   </header>
 
   <div class="header-section">
-    <h2>MY LIFESTYLE POSTS</h2>
+    <h2>MY BLOG POSTS</h2>
   </div>
 
-  <div class="container">
+  <div id="container" class="container">
     <div class="row">
-      <div class="col-md-7">
-        <div class="grey-section">
-          <p><strong>Posted Date: </strong>08/04/2022</p>
-          <p>Category</p>
+      {% for post in category_posts %}
+        <div class="col-md-7">
+          <div class="grey-section">
+            <p><strong>Posted Date: </strong>{{post.postedDate.strftime('%Y/%m/%d')}}</p>
+            <p><strong>{{post.category}}</strong></p>
+          </div>
+
+          <h3>{{post.title}}</h3>
+          <hr>
+
+          <img src="../static/blogPhotos/{{post.blog_pic_path}}">
+          <p>{{post.description}}</p>
         </div>
-
-        <h3>Blog Title</h3>
-        <hr>
-
-        <img src="../static/images/thumbnail-1.jpg">
-        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec
-          interdum, metus et hendrerit aliquet,
-          dolor diam sagittis ligula, eget egestas libero turpis vel mi. Nunc nulla. Fusce risus nisl, viverra et,
-          tempor et, pretium in, sapien.
-          Donec venenatis vulputate lorem. Morbi nec metus. Phasellus blandit leo ut odio. <br>
-
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-          Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.
-
-          Lorem ipsum Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.
-          Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum
-          rhoncus,
-          sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar,
-          hendrerit id, lorem.
-          Maecenas nec odio et ante tincidunt tempus.</p>
-      </div>
+      {% endfor %}
 
       <div class="col-md-4">
         <h5>SUBSCRIBE TO MY NEWSLETTER</h5>
@@ -146,6 +134,13 @@
           <button class="del-btn">DELETE</button>
         </div>
 
+        <div class="col-md-12">
+          <h6><strong>John Doe</strong></h6>
+          <p class="grey-txt">08/04/2022</p>
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
+            Cum sociis natoque penatibus et magnis dis parturient montes.</p>
+          <button class="del-btn">DELETE</button>
+        </div>
       </div>
     </div>
   </div>

@@ -67,6 +67,17 @@ def create():
 
     return render_template('create.html',blog_form= blog_form)
 
+# DISPLAY POSTS BY CATEGORY
+@main.route('/category/<cat>')
+def category(cat):
+    '''
+    function to return the blog posts by category
+    '''
+    
+    category_posts = Blog.get_blogs(cat)
+
+    return render_template('category.html', category_posts = category_posts)
+
 #PROFILE PAGE
 @main.route('/profile/<uname>')
 @login_required
