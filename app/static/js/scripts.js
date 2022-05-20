@@ -4,6 +4,11 @@ $(document).ready(function(){
     $(".alert").css("display", "none");
   })
 
+  $('.pic-upload').hide();
+
+  $('#change-profile-btn').click(function(){
+    $('.pic-upload').toggle();
+  })
 });
 
 // Add active class to the current button (highlight it)

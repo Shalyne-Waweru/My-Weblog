@@ -12,7 +12,7 @@ def login():
     View root page function that returns the signup page and its data
     '''
 
-    # # Create the form instance and pass it into our template
+    # Create the form instance and pass it into our template
     login_form = LoginForm()
 
     if request.method == 'POST':
@@ -31,7 +31,7 @@ def login():
 
                 flash("Logged In Successfully!")
 
-                return redirect(request.args.get('next') or url_for('main.profile'))
+                return redirect(request.args.get('next') or url_for('main.profile', uname=user.username))
 
             flash('Invalid Email or Password')
 

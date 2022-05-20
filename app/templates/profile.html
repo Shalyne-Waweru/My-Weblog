@@ -49,10 +49,10 @@
 
     <div class="auth">
       {% if current_user.is_authenticated %}
-        <h5 class="username">HELLO {{current_user.username}}</h5>
-        <button class="login-btn"><a href="{{ url_for('auth.logout') }}">LOGOUT</a></button>
+      <h5 class="username">HELLO {{current_user.username}}</h5>
+      <button class="login-btn"><a href="{{ url_for('auth.logout') }}">LOGOUT</a></button>
       {% else %}
-        <button class="login-btn"><a href="{{ url_for('auth.login') }}">LOGIN</a></button>
+      <button class="login-btn"><a href="{{ url_for('auth.login') }}">LOGIN</a></button>
       {% endif %}
     </div>
 
@@ -62,9 +62,14 @@
   <!-- Profile Info Section -->
   <div class="profile">
     <div class="container">
-      <img src="../static/images/h-background.png" alt="Profile Image">
-      <p>Username</p>
-      <p>Email Address</p>
+      {% if user.profile_pic_path %}
+      <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="Profile Image" class="img-thumbnail">
+      {%else%}
+      <img src="../static/images/h-background.png" alt="Dummy Profile Image">
+      {% endif %}
+
+      <p><strong>{{user.username}}</strong></p>
+      <p><strong>{{user.email}}</strong></p>
       <div class="more-info">
         <div class="posts">
           <p class="count">0</p>
@@ -76,7 +81,19 @@
           <p><strong>COMMENTS</strong></p>
         </div>
       </div>
-      <button class="submit-btn" type="button">CHANGE PROFILE PHOTO</button>
+      <button id="change-profile-btn" class="submit-btn" type="button">CHANGE PROFILE PHOTO</button>
+
+      <!-- Change Profile Section -->
+      <div class="pic-upload">
+        {% if user == current_user %}
+        <form action="{{url_for('main.update_pic',uname=user.username)}}" method="post" enctype="multipart/form-data">
+
+          <input class="file-upload" type="file" name="photo"  required>
+          <button type="submit">SUBMIT</button>
+        </form>
+        {% endif %}
+      </div>
+
     </div>
   </div>
 
