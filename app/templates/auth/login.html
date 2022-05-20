@@ -12,6 +12,20 @@
   <title>Login</title>
 </head>
 <body>
+  <!-- Flash Messages  -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-dark alert-dismissible text-center fade show m-0" role="alert">
+        {{message}}
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
   <div class="container">
     <div class="row">
       <div class="col-md-5">
@@ -21,19 +35,32 @@
       <div class="col-md-6">
         <h2>LOGIN</h2>
 
-        <form action="" method="POST">
-          <label for="email">Email Address</label>
+        <form action="{{url_for('auth.login')}}" method="POST">
+          {{login_form.csrf_token}}
+          {{login_form.email.label}}
+          {{ login_form.email}}
+
+          {{login_form.password.label}}
+          {{login_form.password}}    
+    
+          {{login_form.submit(class='submit-btn')}}
+
+          <!-- <label for="email">Email Address</label>
           <input type="email" name="email" required>
 
           <label for="password">Password</label>
           <input type="password" name="password" required>
 
-          <button class="submit-btn" type="submit"><a href="{{url_for('main.profile')}}">LOGIN</a></button>
+          <button class="submit-btn" type="submit"><a href="{{url_for('main.profile')}}">LOGIN</a></button> -->
         </form>
 
         <p> Don't have an account? <strong><a href="{{url_for('auth.signup')}}">SIGN UP</a></strong></p>
       </div>
     </div>
   </div>
+
+  <!--jQuery and Javascript Files-->
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
 </body>
 </html>

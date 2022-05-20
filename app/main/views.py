@@ -1,4 +1,5 @@
 from flask import render_template
+from flask_login import login_required
 from . import main
 
 # LANDING PAGE
@@ -30,6 +31,7 @@ def lifestyle():
 
 # CREATE POSTS PAGE
 @main.route('/create')
+@login_required
 def create():
 
     '''
@@ -39,6 +41,7 @@ def create():
 
 # PROFILE PAGE
 @main.route('/profile')
+@login_required
 def profile():
 
     '''

@@ -1,3 +1,11 @@
+$(document).ready(function(){
+  
+  $('.close').click(function(){
+    $(".alert").css("display", "none");
+  })
+
+});
+
 // Add active class to the current button (highlight it)
 var header = document.getElementById("nav-btns");
 var btns = header.getElementsByClassName("link");

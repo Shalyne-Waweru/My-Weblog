@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!--Font Awesome-->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
 
   <!--Stylesheets-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css"
@@ -18,6 +19,20 @@
 </head>
 
 <body>
+  <!-- Flash Messages  -->
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-dark alert-dismissible text-center fade show m-0" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
   <!-- Navbar section -->
   <header class="navbar">
     <div class="logo">
@@ -32,7 +47,15 @@
       <li><a class="link" href="{{ url_for('main.create') }}">CREATE</a></li>
     </ul>
 
-    <button class="login-btn"><a href="{{ url_for('auth.login') }}">LOGOUT</a></button>
+    <div class="auth">
+      {% if current_user.is_authenticated %}
+        <h5 class="username">HELLO {{current_user.username}}</h5>
+        <button class="login-btn"><a href="{{ url_for('auth.logout') }}">LOGOUT</a></button>
+      {% else %}
+        <button class="login-btn"><a href="{{ url_for('auth.login') }}">LOGIN</a></button>
+      {% endif %}
+    </div>
+
 
   </header>
 
@@ -64,7 +87,7 @@
 
         <div class="col-md-3">
           <img src="../static/images/thumbnail-1.jpg" alt="Blog Post Image">
-  
+
           <div class="post-info">
             <h3>Category</h3>
             <h5>Blog Title</h5>
@@ -73,7 +96,7 @@
               et sint nobis est sunt quis id ipsum
               fugit. Ut quibusdam quae!</p>
             <p><strong>DATE: </strong> 08/04/2022</p>
-  
+
             <div class="action-btns">
               <button class="more-btn"><a href="#">DELETE</a></button>
               <div class="comments-section">
@@ -82,12 +105,12 @@
               </div>
             </div>
           </div>
-  
+
         </div>
 
         <div class="col-md-3">
           <img src="../static/images/thumbnail-1.jpg" alt="Blog Post Image">
-  
+
           <div class="post-info">
             <h3>Category</h3>
             <h5>Blog Title</h5>
@@ -96,7 +119,7 @@
               et sint nobis est sunt quis id ipsum
               fugit. Ut quibusdam quae!</p>
             <p><strong>DATE: </strong> 08/04/2022</p>
-  
+
             <div class="action-btns">
               <button class="more-btn"><a href="#">DELETE</a></button>
               <div class="comments-section">
@@ -105,12 +128,12 @@
               </div>
             </div>
           </div>
-  
+
         </div>
 
         <div class="col-md-3">
           <img src="../static/images/thumbnail-1.jpg" alt="Blog Post Image">
-  
+
           <div class="post-info">
             <h3>Category</h3>
             <h5>Blog Title</h5>
@@ -119,7 +142,7 @@
               et sint nobis est sunt quis id ipsum
               fugit. Ut quibusdam quae!</p>
             <p><strong>DATE: </strong> 08/04/2022</p>
-  
+
             <div class="action-btns">
               <button class="more-btn"><a href="#">DELETE</a></button>
               <div class="comments-section">
@@ -128,7 +151,7 @@
               </div>
             </div>
           </div>
-  
+
         </div>
 
       </div>
@@ -145,6 +168,11 @@
     <hr>
     <p>Shalyne <span>&#169;</span> 2022. MyWeblog. All Rights Reserved.</p>
   </div>
+
+  <!--jQuery and Javascript Files-->
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
 </body>
 
 </html>

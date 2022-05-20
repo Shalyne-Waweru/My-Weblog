@@ -11,6 +11,11 @@
     <li><a class="link" href="{{ url_for('main.travel') }}">TRAVEL</a></li>
   </ul>
 
-  <button class="login-btn"><a href="{{ url_for('auth.login') }}">LOGIN</a></button>
+  {% if current_user.is_authenticated %}
+    <h5 class="username">HELLO {{current_user.username}}</h5>
+    <button class="login-btn"><a href="{{ url_for('auth.logout') }}">LOGOUT</a></button>
+  {% else %}
+    <button class="login-btn"><a href="{{ url_for('auth.login') }}">LOGIN</a></button>
+  {% endif %}
 
 </header>

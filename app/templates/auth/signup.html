@@ -12,6 +12,20 @@
   <title>Signup</title>
 </head>
 <body>
+  <!-- Flash Messages  -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-dark alert-dismissible text-center fade show m-0" role="alert">
+        {{message}}
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
   <div class="container">
     <div class="row">
       <div class="col-md-5">
@@ -21,25 +35,30 @@
       <div class="col-md-6">
         <h2>SIGN UP</h2>
 
-        <form action="" method="POST">
-          <label for="username">Username</label>
-          <input type="text" name="username" required>
+        <form action="{{url_for('auth.signup')}}" method="POST">
+          {{signup_form.csrf_token}}
+          {{signup_form.username.label}}
+          {{signup_form.username}}
 
-          <label for="email">Email Address</label>
-          <input type="email" name="email" required>
+          {{signup_form.email.label}}
+          {{ signup_form.email}}
 
-          <label for="password">Password</label>
-          <input type="password" name="password" required>
-
-          <label for="password">Confirm Password</label>
-          <input type="password" name="password" required>
-
-          <button class="submit-btn" type="submit">SIGN UP</button>
+          {{signup_form.password.label}}
+          {{signup_form.password}}    
+                
+          {{signup_form.confirm_password.label}}
+          {{signup_form.confirm_password}}
+    
+          {{signup_form.submit(class='submit-btn')}}
         </form>
 
         <p> Already have an account? <strong><a href="{{url_for('auth.login')}}">LOGIN</a></strong></p>
       </div>
     </div>
   </div>
+
+  <!--jQuery and Javascript Files-->
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
 </body>
 </html>
