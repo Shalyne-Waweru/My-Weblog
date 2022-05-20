@@ -28,7 +28,7 @@
           <label for="password">Password</label>
           <input type="password" name="password" required>
 
-          <button class="submit-btn" type="submit">LOGIN</button>
+          <button class="submit-btn" type="submit"><a href="{{url_for('main.profile')}}">LOGIN</a></button>
         </form>
 
         <p> Don't have an account? <strong><a href="{{url_for('auth.signup')}}">SIGN UP</a></strong></p>

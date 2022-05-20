@@ -36,3 +36,12 @@ def create():
     View root page function that returns the create posts page and its data
     '''
     return render_template('create.html')
+
+# PROFILE PAGE
+@main.route('/profile')
+def profile():
+
+    '''
+    View root page function that returns the profile page and its data
+    '''
+    return render_template('profile.html')
