@@ -75,7 +75,7 @@
       <p><strong>{{user.email}}</strong></p>
       <div class="more-info">
         <div class="posts">
-          <p class="count">0</p>
+          <p class="count">{{user.blogs.count()}}</p>
           <p><strong>POSTS</strong></p>
         </div>
 
@@ -104,75 +104,32 @@
   <div class="feed">
     <div class="container">
       <div class="row">
+        {% if all_blogs %}
+          {% for blog in all_blogs %}
+            <div class="col-md-3">
+              
+              <img src="../static/blogPhotos/{{blog.blog_pic_path}}" alt="Blog Post Image">
 
-        <div class="col-md-3">
-          <img src="../static/images/thumbnail-1.jpg" alt="Blog Post Image">
+              <div class="post-info">
+                <h3>{{blog.category}}</h3>
+                <h5>{{blog.title}}</h5>
+                <p>{{blog.description | truncate(100)}}</p>
+                <p><strong>DATE: </strong> {{blog.postedDate.strftime('%Y/%m/%d')}}</p>
 
-          <div class="post-info">
-            <h3>Category</h3>
-            <h5>Blog Title</h5>
-            <p>Lorem ipsum dolor sit amet. 33
-              impedit dolorem aut enim molestiae
-              et sint nobis est sunt quis id ipsum
-              fugit. Ut quibusdam quae!</p>
-            <p><strong>DATE: </strong> 08/04/2022</p>
-
-            <div class="action-btns">
-              <button class="more-btn"><a href="#">DELETE</a></button>
-              <div class="comments-section">
-                <i class="fas fa-comments"></i>
-                <p>10</p>
+                <div class="action-btns">
+                  <button class="more-btn"><a href="#">DELETE</a></button>
+                  <div class="comments-section">
+                    <i class="fas fa-comments"></i>
+                    <p>10</p>
+                  </div>
+                </div>
               </div>
+
             </div>
-          </div>
-
-        </div>
-
-        <div class="col-md-3">
-          <img src="../static/images/thumbnail-1.jpg" alt="Blog Post Image">
-
-          <div class="post-info">
-            <h3>Category</h3>
-            <h5>Blog Title</h5>
-            <p>Lorem ipsum dolor sit amet. 33
-              impedit dolorem aut enim molestiae
-              et sint nobis est sunt quis id ipsum
-              fugit. Ut quibusdam quae!</p>
-            <p><strong>DATE: </strong> 08/04/2022</p>
-
-            <div class="action-btns">
-              <button class="more-btn"><a href="#">DELETE</a></button>
-              <div class="comments-section">
-                <i class="fas fa-comments"></i>
-                <p>10</p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-md-3">
-          <img src="../static/images/thumbnail-1.jpg" alt="Blog Post Image">
-
-          <div class="post-info">
-            <h3>Category</h3>
-            <h5>Blog Title</h5>
-            <p>Lorem ipsum dolor sit amet. 33
-              impedit dolorem aut enim molestiae
-              et sint nobis est sunt quis id ipsum
-              fugit. Ut quibusdam quae!</p>
-            <p><strong>DATE: </strong> 08/04/2022</p>
-
-            <div class="action-btns">
-              <button class="more-btn"><a href="#">DELETE</a></button>
-              <div class="comments-section">
-                <i class="fas fa-comments"></i>
-                <p>10</p>
-              </div>
-            </div>
-          </div>
-
-        </div>
+          {% endfor %}
+        {% else %}
+          <h3 class="default">You have No Posts Yet</h3>
+        {% endif %}
 
       </div>
     </div>

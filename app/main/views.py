@@ -1,8 +1,11 @@
+from os import uname
 from flask import render_template,redirect,url_for,flash,request,abort
-from flask_login import login_required
+from flask_login import login_required,current_user
+from sqlalchemy import desc
 from . import main
-from ..models import User
-from .. import db,photos
+from ..models import User,Blog
+from .. import db,photos,blogPhotos
+from .forms import BlogForm
 
 # LANDING PAGE
 @main.route('/')
@@ -32,14 +35,37 @@ def lifestyle():
     return render_template('lifestyle.html')
 
 # CREATE POSTS PAGE
-@main.route('/create')
+@main.route('/create', methods = ['GET','POST'])
 @login_required
 def create():
 
     '''
     View root page function that returns the create posts page and its data
     '''
-    return render_template('create.html')
+
+    blog_form = BlogForm()
+
+    if request.method == 'POST':
+
+        if blog_form.validate_on_submit():
+
+            #Get the inputted data
+            filename = blogPhotos.save(blog_form.blog_pic_path.data)
+            title = blog_form.title.data
+            category = blog_form.category.data
+            description = blog_form.description.data
+                
+            #Create a new_blog object and save it
+            new_blog = Blog(blog_pic_path=filename, title=title, category=category, description= description, user_id=current_user.id)
+            new_blog.save_blog()
+
+            flash("Post Created Successfully!")
+
+            return redirect(url_for('main.profile', uname = current_user.username))
+
+        flash("Enter the Correct Details")
+
+    return render_template('create.html',blog_form= blog_form)
 
 #PROFILE PAGE
 @main.route('/profile/<uname>')
@@ -55,7 +81,9 @@ def profile(uname):
     if user is None:
         abort(404)
 
-    return render_template("profile.html", user = user)
+    all_blogs = Blog.get_all_blogs()
+
+    return render_template("profile.html", user = user,all_blogs = all_blogs)
 
 #UPDATE PROFILE PIC
 @main.route('/profile/<uname>/update/pic',methods= ['POST'])
@@ -75,5 +103,7 @@ def update_pic(uname):
         #Update the profile_pic_path property in our user table and store the path to the file
         user.profile_pic_path = path
         db.session.commit()
+
+        flash("Profile Updated Successfully!")
 
     return redirect(url_for('main.profile',uname=uname))

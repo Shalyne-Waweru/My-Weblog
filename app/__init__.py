@@ -13,6 +13,7 @@ login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
 
 photos = UploadSet('photos',IMAGES)
+blogPhotos = UploadSet('blogPhotos',IMAGES)
 
 def create_app(config_name):
 
@@ -23,6 +24,7 @@ def create_app(config_name):
 
     # configure UploadSet
     configure_uploads(app,photos)
+    configure_uploads(app,blogPhotos)
     
     # Initializing flask extensions
     bootstrap.init_app(app)

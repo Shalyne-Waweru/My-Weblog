@@ -34,10 +34,21 @@
       <li><a class="link active" href="{{ url_for('main.index') }}">HOME</a></li>
       <li><a class="link" href="{{ url_for('main.lifestyle') }}">LIFESTYLE</a></li>
       <li><a class="link" href="{{ url_for('main.travel') }}">TRAVEL</a></li>
+      {% if current_user.is_authenticated %}
       <li><a class="link" href="{{ url_for('main.create') }}">CREATE</a></li>
+      <li><a class="link" href="{{ url_for('main.profile', uname = current_user.username) }}">PROFILE</a></li>
+      {% endif %}
     </ul>
 
-    <a href="#"><i class="fas fa-user-circle"></i></a>
+    <div class="auth">
+      {% if current_user.is_authenticated %}
+      <h5 class="username">HELLO {{current_user.username}}</h5>
+      <button class="login-btn"><a href="{{ url_for('auth.logout') }}">LOGOUT</a></button>
+      {% else %}
+      <button class="login-btn"><a href="{{ url_for('auth.login') }}">LOGIN</a></button>
+      {% endif %}
+    </div>
+
 
   </header>
 
@@ -50,23 +61,23 @@
     <h6>FILL IN THE FORM BELOW</h6>
 
     <!-- Comment Form Section -->
-    <form action="" method="POST">
-      <label for="image"><strong>Upload Blog Image</strong></label>
-      <input type="file" id="myFile" name="filename">
+    <form action="{{url_for('main.create')}}" method="post" enctype="multipart/form-data">
+      {{blog_form.csrf_token}}
 
-      <label for="title"><strong>Blog Title</strong></label>
-      <input type="text" name="title" required></input>
-
-      <label for="categories"><strong>Select Blog Category</strong></label>
-      <select name="categories" id="categories">
-        <option value="lifestyle">Lifestyle</option>
-        <option value="travel">Travel</option>
-      </select>
-
-      <label for="description"><strong>Description</strong></label>
-      <textarea type="text" name="description" required></textarea>
+      {{blog_form.blog_pic_path.label}}
+      {{blog_form.blog_pic_path}}
       
-      <button class="submit-btn" type="submit">ADD POST</button>
+      {{blog_form.title.label}}
+      {{blog_form.title}}
+
+      {{blog_form.category.label}}
+      {{blog_form.category}}
+
+      {{blog_form.description.label}}
+      {{blog_form.description}}    
+
+      {{blog_form.submit(class='submit-btn')}}
+  
     </form>
 
   </div>
