@@ -34,14 +34,21 @@
       <li><a class="link active" href="{{ url_for('main.index') }}">HOME</a></li>
       <li><a class="link" href="{{ url_for('main.lifestyle') }}">LIFESTYLE</a></li>
       <li><a class="link" href="{{ url_for('main.travel') }}">TRAVEL</a></li>
+      {% if current_user.is_authenticated %}
+      <li><a class="link" href="{{ url_for('main.create') }}">CREATE</a></li>
+      <li><a class="link" href="{{ url_for('main.profile', uname = current_user.username) }}">PROFILE</a></li>
+      {% endif %}
     </ul>
 
-    {% if current_user.is_authenticated %}
+    <div class="auth">
+      {% if current_user.is_authenticated %}
       <h5 class="username">HELLO {{current_user.username}}</h5>
       <button class="login-btn"><a href="{{ url_for('auth.logout') }}">LOGOUT</a></button>
-    {% else %}
+      {% else %}
       <button class="login-btn"><a href="{{ url_for('auth.login') }}">LOGIN</a></button>
-    {% endif %}
+      {% endif %}
+    </div>
+
 
   </header>
 

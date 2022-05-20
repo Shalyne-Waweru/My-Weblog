@@ -44,7 +44,10 @@
       <li><a class="link active" href="{{ url_for('main.index') }}">HOME</a></li>
       <li><a class="link" href="{{ url_for('main.lifestyle') }}">LIFESTYLE</a></li>
       <li><a class="link" href="{{ url_for('main.travel') }}">TRAVEL</a></li>
+      {% if current_user.is_authenticated %}
       <li><a class="link" href="{{ url_for('main.create') }}">CREATE</a></li>
+      <li><a class="link" href="{{ url_for('main.profile', uname = current_user.username) }}">PROFILE</a></li>
+      {% endif %}
     </ul>
 
     <div class="auth">
@@ -88,7 +91,7 @@
         {% if user == current_user %}
         <form action="{{url_for('main.update_pic',uname=user.username)}}" method="post" enctype="multipart/form-data">
 
-          <input class="file-upload" type="file" name="photo"  required>
+          <input class="file-upload" type="file" name="photo" required>
           <button type="submit">SUBMIT</button>
         </form>
         {% endif %}
