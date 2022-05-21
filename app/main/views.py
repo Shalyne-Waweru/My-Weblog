@@ -73,6 +73,8 @@ def create():
 
         if blog_form.validate_on_submit():
 
+            subscriber = Subscribers.query.first()
+
             #Get the inputted data
             filename = blogPhotos.save(blog_form.blog_pic_path.data)
             title = blog_form.title.data
@@ -84,6 +86,8 @@ def create():
             new_blog.save_blog()
 
             flash("Post Created Successfully!")
+
+            mail_message("NEW BLOG UPDATE","update/new_post",subscriber.email,subscriber=subscriber)
 
             return redirect(url_for('main.profile', uname = current_user.username))
 

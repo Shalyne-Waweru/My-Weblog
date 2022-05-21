@@ -1,0 +1,8 @@
+Hey {{subscriber.firstname}},
+
+Check out my new blog post!
+
+If you have any questions, please reply to this email. I’m always happy to help!
+
+Kind Regards,
+Shalyne
