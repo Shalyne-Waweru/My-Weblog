@@ -112,9 +112,6 @@ def del_blog(blog_id):
 
     blogs = Blog.query.filter_by(id=blog_id).first_or_404()
 
-    comments = Comments.query.filter_by(blog_id=blog_id).first_or_404()
-
-    db.session.delete(comments)
     db.session.delete(blogs)
     db.session.commit()
 
