@@ -384,6 +384,7 @@ input::placeholder{
 .add-comment label {
   margin-top: 10px;
   margin-left: 200px;
+  color: black;
 }
 
 .add-comment input {
