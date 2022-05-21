@@ -56,17 +56,18 @@ def category(cat):
     '''
     function to return the blog posts by category
     '''
-    
+
     category_posts = Blog.get_blogs(cat)
 
     return render_template('category.html', category_posts = category_posts)
 
 #READ MORE REDIRECT
-@main.route('/blog/<int:blog_id>')
+@main.route('/blog/<int:blog_id>', methods = ['GET','POST'])
 def open_post(blog_id):
     '''
     function to return the blog posts by category
     '''
+    blog_cat_post = Blog.query.first()
 
     blog_post = Blog.query.filter_by(id=blog_id).first()
 
@@ -83,12 +84,12 @@ def open_post(blog_id):
             new_comment = Comments(comment=comment, blog_id=blog_id )
             new_comment.save_comment()
 
-            return redirect(url_for('main.comments',blog_id=blog_id))
+            return redirect(url_for('main.open_post',blog_id=blog_id))
 
     #Get all the Comments
     all_comments = Comments.get_comments(blog_id)
 
-    return render_template('single-post.html', blog_post = blog_post, comments_form = comments_form,all_comments = all_comments)
+    return render_template('single-post.html', blog_post = blog_post, comments_form = comments_form,all_comments = all_comments,blog_cat_post = blog_cat_post)
 
 
 #PROFILE PAGE
@@ -106,8 +107,9 @@ def profile(uname):
         abort(404)
 
     all_blogs = Blog.get_all_blogs()
+    comments_count = Comments.query.count()
 
-    return render_template("profile.html", user = user,all_blogs = all_blogs)
+    return render_template("profile.html", user = user,all_blogs = all_blogs, comments_count = comments_count)
 
 #UPDATE PROFILE PIC
 @main.route('/profile/<uname>/update/pic',methods= ['POST'])

@@ -15,7 +15,7 @@
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <link href="{{url_for('static',filename='css/category.css')}}" rel="stylesheet">
 
-  <title>Travel Page</title>
+  <title>Blog Posts Page</title>
 </head>
 
 <body>
@@ -56,110 +56,31 @@
     <h2>MY BLOG POSTS</h2>
   </div>
 
-  <div id="container" class="container">
+  <div class="container">
     <div class="row">
       {% for post in category_posts %}
-        <div class="col-md-7">
-          <div class="grey-section">
-            <p><strong>Posted Date: </strong>{{post.postedDate.strftime('%Y/%m/%d')}}</p>
-            <p><strong>{{post.category}}</strong></p>
-          </div>
+        <div class="col-md-3">
+          <img src="../static/blogPhotos/{{post.blog_pic_path}}" alt="Blog Post Image">
 
-          <h3>{{post.title}}</h3>
-          <hr>
+          <div class="post-info">
+            <h3>{{post.category}}</h3>
+            <h5>{{post.title}}</h5>
+            <p>{{post.description | truncate(100)}}</p>
+            <p><strong>DATE: </strong> {{post.postedDate.strftime('%Y/%m/%d')}}</p>
 
-          <img src="../static/blogPhotos/{{post.blog_pic_path}}">
-          <p>{{post.description}}</p>
-        </div>
-      {% endfor %}
-
-      <div class="col-md-4">
-        <h5>SUBSCRIBE TO MY NEWSLETTER</h5>
-
-        <div class="newsletter">
-          <h5><strong><span class="charm">Sign Up</span> FOR EMAIL UPDATES </h5></strong>
-          <p>Get an email alert for my recents posts and never miss out on them!</p>
-
-          <!-- Subscribe Form Section -->
-          <form action="" method="POST">
-            <input type="text" name="firstname" placeholder="Firstname" required>
-            <input type="email" name="email" placeholder="Enter email to subscribe" required>
-            <button class="submit-btn" type="submit">SUBSCRIBE</button>
-          </form>
-        </div>
-
-        <div class="quote-section">
-          <h5>QUOTE OF THE DAY</h5>
-
-          <div class="quotes">
-            <img src="../static/images/quote.png">
-            <p>Lorem ipsum dolor sit amet. 33
-              impedit dolorem aut enim molestiae
-              et sint nobis est sunt quis id ipsum
-              fugit. Ut quibusdam quae!</p>
-            <hr>
-            <h4>Author</h4>
-            <div class="votes">
-              <div class="upvote">
-                <a href="#"><i class="fas fa-thumbs-up"></i></a>
-                <p>0</p>
-              </div>
-              <div class="downvote">
-                <a href="#"><i class="fas fa-thumbs-down"></i></a>
-                <p>0</p>
+            <div class="action-btns">
+              <button class="more-btn"><a href="{{ url_for('main.open_post',blog_id = post.id) }}">READ MORE</a></button>
+              <div class="comments-section">
+                <a href="{{ url_for('main.open_post',blog_id = post.id) }}"><i class="fas fa-comments"></i></a>
+                <p>{{post.comments.count()}}</p>
               </div>
             </div>
           </div>
+
         </div>
-
-
-      </div>
-    </div>
-    <hr class="horizontal">
-  </div>
-
-  <div class="comments-section">
-
-    <div class="container" id="comments-title">
-      <h4>Comments on "Blog Title"</h4>
-    </div>
-
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h6><strong>John Doe</strong></h6>
-          <p class="grey-txt">08/04/2022</p>
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-            Cum sociis natoque penatibus et magnis dis parturient montes.</p>
-          <button class="del-btn">DELETE</button>
-        </div>
-
-        <div class="col-md-12">
-          <h6><strong>John Doe</strong></h6>
-          <p class="grey-txt">08/04/2022</p>
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-            Cum sociis natoque penatibus et magnis dis parturient montes.</p>
-          <button class="del-btn">DELETE</button>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
-
-  <!-- Add Comment Section -->
-  <div class="add-comment">
-    <div class="container">
-      <h3>Leave a Comment</h3>
-      <p>Required fields are marked *</p>
-
-      <!-- Comment Form Section -->
-      <form action="" method="POST">
-        <label for="comment">Comment*</label>
-        <textarea type="text" name="comment" required></textarea>
-        <button class="submit-btn" type="submit">POST COMMENT</button>
-      </form>
-    </div>
-  </div>
-
 
   <!-- Footer section -->
   <div class="footer">
