@@ -38,7 +38,6 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
-
 class Blog(db.Model):
     __tablename__= 'blogposts'
 
@@ -107,3 +106,17 @@ class Quote:
         self.id = id 
         self.author = author
         self.quote = quote 
+
+class Subscribers( db.Model):
+    __tablename__ = 'subscribers'
+
+    id = db.Column(db.Integer,primary_key = True)
+    firstname = db.Column(db.String(255),unique = True,index = True)
+    email = db.Column(db.String(255),unique = True,index = True)
+
+    def save_subee(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f'User {self.firstname}'

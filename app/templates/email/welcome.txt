@@ -1,0 +1,8 @@
+Hey {{new_subee.firstname}},
+
+I'm Shalyne and I'd like to personally thank you for subscribing to receive email updates for my blog posts. 
+
+If you have any questions, please reply to this email. I’m always happy to help!
+
+Kind Regards,
+Shalyne

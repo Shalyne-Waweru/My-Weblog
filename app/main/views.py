@@ -4,20 +4,59 @@ from flask import render_template,redirect,url_for,flash,request,abort
 from flask_login import login_required,current_user
 from sqlalchemy import desc
 from . import main
-from ..models import User,Blog,Comments
+from ..models import User,Blog,Comments,Subscribers
 from .. import db,photos,blogPhotos
-from .forms import BlogForm,CommentForm
+from .forms import BlogForm,CommentForm,SubscribeForm
 from ..request import generate_quote, random_quotes
+from ..email import mail_message
 
 # LANDING PAGE
-@main.route('/')
+@main.route('/', methods=('GET', 'POST'))
 def index():
 
     '''
     View root page function that returns the index page and its data
     '''
     recent_posts = Blog.query.order_by(Blog.postedDate).limit(3).all()
-    return render_template('index.html', recent_posts = recent_posts)
+
+    subscribe_form = SubscribeForm()
+
+    if request.method == 'POST':
+
+        if subscribe_form.validate_on_submit():
+
+            #Get the inputted firstname
+            firstname= subscribe_form.firstname.data
+
+            #Check if there is an existing user with that firstname
+            user_firstname = Subscribers.query.filter_by(firstname=firstname).first()
+            if user_firstname:
+                flash("There is an account with that firstname!")
+                return redirect(url_for('main.index'))
+
+            #Get the inputted email address
+            email = subscribe_form.email.data
+
+            #Check if there is an existing user with that email address
+            user_email = Subscribers.query.filter_by(email=email).first()
+            if user_email:
+                flash("There is an account with that email!")
+                return redirect(url_for('main.index'))
+                
+            #Create a new_blog object and save it
+            new_subee = Subscribers(firstname=firstname, email=email)
+            new_subee.save_subee()
+
+            flash("You have Successfully Subscribed for Email Updates!")
+
+            #We pass in the EMAIL SUBJECT, the TEMPLATE FILE where our message body will be stored and the NEW USER'S EMAIL which we get from the registration form and USER as a keyword argument.
+            mail_message("WELCOME MY BLOG","email/welcome",new_subee.email,new_subee=new_subee)
+
+            return redirect(url_for('main.index'))
+
+        flash("Enter the Correct Details")
+
+    return render_template('index.html', recent_posts = recent_posts, subscribe_form = subscribe_form)
 
 # CREATE POSTS PAGE
 @main.route('/create', methods = ['GET','POST'])
@@ -109,10 +148,47 @@ def open_post(blog_id):
 
             return redirect(url_for('main.open_post',blog_id=blog_id))
 
+    subscribe_form = SubscribeForm()
+
+    if request.method == 'POST':
+
+        if subscribe_form.validate_on_submit():
+
+            ##Get the inputted firstname
+            firstname= subscribe_form.firstname.data
+
+            #Check if there is an existing user with that firstname
+            user_firstname = Subscribers.query.filter_by(firstname=firstname).first()
+            if user_firstname:
+                flash("There is an account with that firstname!")
+                return redirect(url_for('main.open_post',blog_id=blog_id))
+
+            #Get the inputted email address
+            email = subscribe_form.email.data
+
+            #Check if there is an existing user with that email address
+            user_email = Subscribers.query.filter_by(email=email).first()
+            if user_email:
+                flash("There is an account with that email!")
+                return redirect(url_for('main.open_post',blog_id=blog_id))
+                
+            #Create a new_blog object and save it
+            new_subee = Subscribers(firstname=firstname, email=email)
+            new_subee.save_subee()
+
+            flash("You have Successfully Subscribed for Email Updates!")
+
+            #We pass in the EMAIL SUBJECT, the TEMPLATE FILE where our message body will be stored and the NEW USER'S EMAIL which we get from the registration form and USER as a keyword argument.
+            mail_message("WELCOME MY BLOG","email/welcome",new_subee.email,new_subee=new_subee)
+
+            return redirect(url_for('main.open_post',blog_id=blog_id))
+
+        flash("Enter the Correct Details")
+
     #Get all the Comments
     all_comments = Comments.get_comments(blog_id)
 
-    return render_template('single-post.html', blog_post = blog_post, comments_form = comments_form,all_comments = all_comments,quotes = quotes)
+    return render_template('single-post.html', blog_post = blog_post, comments_form = comments_form,all_comments = all_comments,quotes = quotes, subscribe_form = subscribe_form)
 
 #DELETE COMMENTS
 @main.route('/delete_comment/<int:blog_id>/', methods=('GET', 'POST'))

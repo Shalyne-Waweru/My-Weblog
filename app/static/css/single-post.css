@@ -199,6 +199,13 @@ form {
   flex-direction: column;
 }
 
+label {
+  color: white;
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: 15px;
+}
+
 input {
   border-radius: 5px;
   margin-bottom: 20px;

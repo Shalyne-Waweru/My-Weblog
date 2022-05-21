@@ -23,17 +23,18 @@
 <body>
   <!-- Flash Messages  -->
   {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      {% for message in messages %}
-      <div class="alert alert-danger alert-dismissible text-center fade show m-0" role="alert">
-        {{message}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      {% endfor %}
-    {% endif %}
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-dark alert-dismissible text-center fade show m-0" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+  {% endif %}
   {% endwith %}
+
 
   <!-- Navbar block  -->
   {% block navbar %}

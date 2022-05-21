@@ -17,9 +17,14 @@
 
           <!-- Subscribe Form Section -->
           <form action="" method="POST">
-            <input type="text" name="firstname" placeholder="Firstname" required>
-            <input type="email" name="email" placeholder="Enter email to subscribe" required>
-            <button class="submit-btn" type="submit">SUBSCRIBE</button>
+            {{subscribe_form.csrf_token}}
+            {{subscribe_form.firstname.label}}
+            {{ subscribe_form.firstname}}
+
+            {{subscribe_form.email.label}}
+            {{subscribe_form.email}}    
+      
+            {{subscribe_form.submit(class='submit-btn')}}
           </form>
         </div>
 

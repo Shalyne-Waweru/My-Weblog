@@ -63,6 +63,10 @@ form {
   flex-direction: column;
 }
 
+label {
+  margin-left: 20px;
+}
+
 input {
   border-radius: 5px;
   margin-bottom: 20px;
