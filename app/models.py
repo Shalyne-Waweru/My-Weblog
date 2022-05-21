@@ -81,6 +81,7 @@ class Comments(db.Model):
     __tablename__ = 'comments'
 
     id = db.Column(db.Integer,primary_key = True)
+    name = db.Column(db.String(255))
     comment = db.Column(db.String)
     postedDate = db.Column(db.DateTime,default=datetime.now)
     #Create Foreign key column where we store the id of the Blog Post to be commented on
@@ -96,6 +97,10 @@ class Comments(db.Model):
     def get_comments(cls,id):
         comments = Comments.query.filter_by(blog_id=id).all()
         return comments
+
+    def delete_comment(self):
+        db.session.delete(self)
+        db.session.commit()
 
 class Quote:
     def __init__(self, id, author, quote):

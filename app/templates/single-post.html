@@ -19,6 +19,20 @@
 </head>
 
 <body>
+  <!-- Flash Messages  -->
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-dark alert-dismissible text-center fade show m-0" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
   <!-- Navbar section -->
   <div class="nav-background">
     <img src="../static/images/thumbnail-4.jpg" alt="Nav  Backgrounf Image" />
@@ -97,12 +111,12 @@
               <h4>{{quote.author}}</h4>
               <div class="votes">
                 <div class="upvote">
-                  <a href="#"><i class="fas fa-thumbs-up"></i></a>
-                  <p>0</p>
+                  <a class="like"><i class="fas fa-thumbs-up"></i></a>
+                  <p class="like-count">0</p>
                 </div>
                 <div class="downvote">
-                  <a href="#"><i class="fas fa-thumbs-down"></i></a>
-                  <p>0</p>
+                  <i id="dislike" class="fas fa-thumbs-down"></i>
+                  <p class="dislike-count">0</p>
                 </div>
               </div>
             </div>
@@ -126,11 +140,11 @@
         {% if all_comments %}
           {% for com in all_comments %}
           <div class="col-md-12">
-            <!-- <h6><strong>{{com.user.username}}</strong></h6> -->
+            <h6><strong>{{com.name}}</strong></h6>
             <p class="grey-txt">{{com.postedDate.strftime('%Y/%m/%d')}}</p>
             <p>{{com.comment}}</p>
             {% if current_user.is_authenticated %}
-            <button class="del-btn">DELETE</button>
+            <button class="del-btn"><a href="{{ url_for('main.del_comment',blog_id = blog_post.id) }}">DELETE</a></button>
             {% endif %}
           </div>
           {% endfor %}
@@ -152,16 +166,21 @@
       <p>Required fields are marked *</p>
 
       <!-- Comment Form Section -->
+      
       <form action="{{url_for('main.open_post', blog_id = blog_post.id)}}" method="POST">
         {{comments_form.csrf_token}}
+
+        {{comments_form.name.label}}
+        {{comments_form.name}}
+
         {{comments_form.comment.label}}
         {{comments_form.comment}}
 
         {{comments_form.submit(class='submit-btn')}}
       </form>
+  
     </div>
   </div>
-
 
   <!-- Footer section -->
   <div class="footer">

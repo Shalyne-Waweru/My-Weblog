@@ -10,6 +10,16 @@ $(document).ready(function(){
     $('.pic-upload').toggle();
   })
 
+  $('.upvote').click(function(){
+    count = parseInt($('.like-count').text())+1;
+    $('.like-count').text(count);
+  })
+
+  $('.downvote').click(function(){
+    count = parseInt($('.dislike-count').text())+1;
+    $('.dislike-count').text(count);
+  })
+
 });
 
 // Add active class to the current button (highlight it)

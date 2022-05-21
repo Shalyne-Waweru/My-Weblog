@@ -117,7 +117,7 @@
                 <p><strong>DATE: </strong> {{blog.postedDate.strftime('%Y/%m/%d')}}</p>
 
                 <div class="action-btns">
-                  <button class="more-btn"><a href="#">DELETE</a></button>
+                  <button class="more-btn"><a href="{{ url_for('main.del_blog',blog_id = blog.id) }}">DELETE</a></button>
                   <div class="comments-section">
                     <i class="fas fa-comments"></i>
                     <p>{{blog.comments.count()}}</p>

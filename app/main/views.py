@@ -1,4 +1,5 @@
 from os import uname
+from unicodedata import name
 from flask import render_template,redirect,url_for,flash,request,abort
 from flask_login import login_required,current_user
 from sqlalchemy import desc
@@ -62,6 +63,22 @@ def category(cat):
 
     return render_template('category.html', category_posts = category_posts)
 
+#DELETE BLOGS
+@main.route('/delete_blog/<int:blog_id>/', methods=('GET', 'POST'))
+def del_blog(blog_id):
+
+    blogs = Blog.query.filter_by(id=blog_id).first_or_404()
+
+    comments = Comments.query.filter_by(blog_id=blog_id).first_or_404()
+
+    db.session.delete(comments)
+    db.session.delete(blogs)
+    db.session.commit()
+
+    flash("Blog Deleted Successfully!")
+
+    return redirect(url_for('main.profile',uname=current_user.username))
+
 #READ MORE REDIRECT
 @main.route('/blog/<int:blog_id>', methods = ['GET','POST'])
 def open_post(blog_id):
@@ -82,10 +99,13 @@ def open_post(blog_id):
         if comments_form.validate_on_submit():
             #If True we gather the data from the form input fields
             comment = comments_form.comment.data
+            name = comments_form.name.data
 
             #Create a new comment object and save it
-            new_comment = Comments(comment=comment, blog_id=blog_id )
+            new_comment = Comments(name=name, comment=comment, blog_id=blog_id )
             new_comment.save_comment()
+
+            flash("Comment Added Successfully!")
 
             return redirect(url_for('main.open_post',blog_id=blog_id))
 
@@ -94,6 +114,20 @@ def open_post(blog_id):
 
     return render_template('single-post.html', blog_post = blog_post, comments_form = comments_form,all_comments = all_comments,quotes = quotes)
 
+#DELETE COMMENTS
+@main.route('/delete_comment/<int:blog_id>/', methods=('GET', 'POST'))
+def del_comment(blog_id):
+
+    blog_post = Blog.query.filter_by(id=blog_id).first()
+
+    comments = Comments.query.filter_by(blog_id=blog_id).first_or_404()
+
+    db.session.delete(comments)
+    db.session.commit()
+
+    flash("Comment Deleted Successfully!")
+
+    return redirect(url_for('main.open_post',blog_id=blog_id,blog_post = blog_post))
 
 #PROFILE PAGE
 @main.route('/profile/<uname>')
