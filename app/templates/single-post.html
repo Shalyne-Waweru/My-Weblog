@@ -89,25 +89,24 @@
         <div class="quote-section">
           <h5>QUOTE OF THE DAY</h5>
 
-          <div class="quotes">
-            <img src="../static/images/quote.png">
-            <p>Lorem ipsum dolor sit amet. 33
-              impedit dolorem aut enim molestiae
-              et sint nobis est sunt quis id ipsum
-              fugit. Ut quibusdam quae!</p>
-            <hr>
-            <h4>Author</h4>
-            <div class="votes">
-              <div class="upvote">
-                <a href="#"><i class="fas fa-thumbs-up"></i></a>
-                <p>0</p>
-              </div>
-              <div class="downvote">
-                <a href="#"><i class="fas fa-thumbs-down"></i></a>
-                <p>0</p>
+          {% for quote in quotes %}
+            <div class="quotes">
+              <img src="../static/images/quote.png">
+              <p>{{quote.quote}}</p>
+              <hr>
+              <h4>{{quote.author}}</h4>
+              <div class="votes">
+                <div class="upvote">
+                  <a href="#"><i class="fas fa-thumbs-up"></i></a>
+                  <p>0</p>
+                </div>
+                <div class="downvote">
+                  <a href="#"><i class="fas fa-thumbs-down"></i></a>
+                  <p>0</p>
+                </div>
               </div>
             </div>
-          </div>
+          {% endfor %}
         </div>
 
 

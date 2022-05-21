@@ -6,6 +6,7 @@ from . import main
 from ..models import User,Blog,Comments
 from .. import db,photos,blogPhotos
 from .forms import BlogForm,CommentForm
+from ..request import generate_quote, random_quotes
 
 # LANDING PAGE
 @main.route('/')
@@ -67,7 +68,9 @@ def open_post(blog_id):
     '''
     function to return the blog posts by category
     '''
-    blog_cat_post = Blog.query.first()
+
+    quote = random_quotes()
+    quotes = generate_quote(1, random_quotes)
 
     blog_post = Blog.query.filter_by(id=blog_id).first()
 
@@ -89,7 +92,7 @@ def open_post(blog_id):
     #Get all the Comments
     all_comments = Comments.get_comments(blog_id)
 
-    return render_template('single-post.html', blog_post = blog_post, comments_form = comments_form,all_comments = all_comments,blog_cat_post = blog_cat_post)
+    return render_template('single-post.html', blog_post = blog_post, comments_form = comments_form,all_comments = all_comments,quotes = quotes)
 
 
 #PROFILE PAGE
