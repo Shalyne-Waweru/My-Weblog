@@ -14,25 +14,8 @@ def index():
     '''
     View root page function that returns the index page and its data
     '''
-    return render_template('index.html')
-
-# TRAVEL POSTS PAGE
-@main.route('/travel')
-def travel():
-
-    '''
-    View root page function that returns the travel posts page and its data
-    '''
-    return render_template('travel.html')
-
-# LIFESTYLE POSTS PAGE
-@main.route('/lifestyle')
-def lifestyle():
-
-    '''
-    View root page function that returns the lifestyle posts page and its data
-    '''
-    return render_template('lifestyle.html')
+    recent_posts = Blog.query.order_by(Blog.postedDate).limit(3).all()
+    return render_template('index.html', recent_posts = recent_posts)
 
 # CREATE POSTS PAGE
 @main.route('/create', methods = ['GET','POST'])
@@ -77,6 +60,18 @@ def category(cat):
     category_posts = Blog.get_blogs(cat)
 
     return render_template('category.html', category_posts = category_posts)
+
+#READ MORE REDIRECT
+@main.route('/blog/<int:blog_id>')
+def open_post(blog_id):
+    '''
+    function to return the blog posts by category
+    '''
+    
+    blog_post = Blog.query.filter_by(id=blog_id).first()
+
+    return render_template('single-post.html', blog_post = blog_post)
+
 
 #PROFILE PAGE
 @main.route('/profile/<uname>')
