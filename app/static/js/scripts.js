@@ -9,6 +9,7 @@ $(document).ready(function(){
   $('#change-profile-btn').click(function(){
     $('.pic-upload').toggle();
   })
+
 });
 
 // Add active class to the current button (highlight it)

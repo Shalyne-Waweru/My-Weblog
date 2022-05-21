@@ -3,9 +3,9 @@ from flask import render_template,redirect,url_for,flash,request,abort
 from flask_login import login_required,current_user
 from sqlalchemy import desc
 from . import main
-from ..models import User,Blog
+from ..models import User,Blog,Comments
 from .. import db,photos,blogPhotos
-from .forms import BlogForm
+from .forms import BlogForm,CommentForm
 
 # LANDING PAGE
 @main.route('/')
@@ -67,10 +67,28 @@ def open_post(blog_id):
     '''
     function to return the blog posts by category
     '''
-    
+
     blog_post = Blog.query.filter_by(id=blog_id).first()
 
-    return render_template('single-post.html', blog_post = blog_post)
+    #Create an instance of the CommentForm class and name it comments_form
+    comments_form = CommentForm()
+
+    if request.method == 'POST':
+        #The method returns True when the form is submitted and all the data has been verified by the validators
+        if comments_form.validate_on_submit():
+            #If True we gather the data from the form input fields
+            comment = comments_form.comment.data
+
+            #Create a new comment object and save it
+            new_comment = Comments(comment=comment, blog_id=blog_id )
+            new_comment.save_comment()
+
+            return redirect(url_for('main.comments',blog_id=blog_id))
+
+    #Get all the Comments
+    all_comments = Comments.get_comments(blog_id)
+
+    return render_template('single-post.html', blog_post = blog_post, comments_form = comments_form,all_comments = all_comments)
 
 
 #PROFILE PAGE

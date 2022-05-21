@@ -45,7 +45,7 @@
       <h5 class="username">HELLO {{current_user.username}}</h5>
       <button class="login-btn"><a href="{{ url_for('auth.logout') }}">LOGOUT</a></button>
       {% else %}
-      <button class="login-btn"><a href="{{ url_for('auth.login') }}">LOGIN</a></button>
+      <button id="login-btn" class="login-btn"><a href="{{ url_for('auth.login') }}">LOGIN</a></button>
       {% endif %}
     </div>
 
@@ -58,18 +58,18 @@
 
   <div id="container" class="container">
     <div class="row">
-        <div class="col-md-7">
-          <div class="grey-section">
-            <p><strong>Posted Date: </strong>{{blog_post.postedDate.strftime('%Y/%m/%d')}}</p>
-            <p><strong>{{blog_post.category}}</strong></p>
-          </div>
-
-          <h3>{{blog_post.title}}</h3>
-          <hr>
-
-          <img src="../static/blogPhotos/{{blog_post.blog_pic_path}}">
-          <p>{{blog_post.description}}</p>
+      <div class="col-md-7">
+        <div class="grey-section">
+          <p><strong>Posted Date: </strong>{{blog_post.postedDate.strftime('%Y/%m/%d')}}</p>
+          <p><strong>{{blog_post.category}}</strong></p>
         </div>
+
+        <h3>{{blog_post.title}}</h3>
+        <hr>
+
+        <img src="../static/blogPhotos/{{blog_post.blog_pic_path}}">
+        <p>{{blog_post.description}}</p>
+      </div>
 
       <div class="col-md-4">
         <h5>SUBSCRIBE TO MY NEWSLETTER</h5>
@@ -124,21 +124,24 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
-          <h6><strong>John Doe</strong></h6>
-          <p class="grey-txt">08/04/2022</p>
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-            Cum sociis natoque penatibus et magnis dis parturient montes.</p>
-          <button class="del-btn">DELETE</button>
-        </div>
+        {% if all_comments %}
+          {% for com in all_comments %}
+          <div class="col-md-12">
+            <!-- <h6><strong>{{com.user.username}}</strong></h6> -->
+            <p class="grey-txt">{{com.postedDate.strftime('%Y/%m/%d')}}</p>
+            <p>{{com.comment}}</p>
+            {% if current_user.is_authenticated %}
+            <button class="del-btn">DELETE</button>
+            {% endif %}
+          </div>
+          {% endfor %}
 
-        <div class="col-md-12">
-          <h6><strong>John Doe</strong></h6>
-          <p class="grey-txt">08/04/2022</p>
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-            Cum sociis natoque penatibus et magnis dis parturient montes.</p>
-          <button class="del-btn">DELETE</button>
-        </div>
+        {% else %}
+
+        <h3 class="comments-default">There are No Comments Yet</h3>
+
+        {% endif %}
+
       </div>
     </div>
   </div>
@@ -150,10 +153,12 @@
       <p>Required fields are marked *</p>
 
       <!-- Comment Form Section -->
-      <form action="" method="POST">
-        <label for="comment">Comment*</label>
-        <textarea type="text" name="comment" required></textarea>
-        <button class="submit-btn" type="submit">POST COMMENT</button>
+      <form action="{{url_for('main.open_post', blog_id = blog_post.id)}}" method="POST">
+        {{comments_form.csrf_token}}
+        {{comments_form.comment.label}}
+        {{comments_form.comment}}
+
+        {{comments_form.submit(class='submit-btn')}}
       </form>
     </div>
   </div>

@@ -20,6 +20,8 @@ class User(UserMixin, db.Model):
 
     #Define the relationship with the Blog model.
     blogs = db.relationship('Blog', backref = 'user', lazy = 'dynamic')
+    #Define the relationship with the Comments model.
+    comments = db.relationship('Comments', backref='user', lazy='dynamic')
 
     @property
     def password(self):
@@ -50,6 +52,9 @@ class Blog(db.Model):
     #Create Foreign key column where we store the id of the user who wrote the blog post
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
+    #Define the relationship with the Comments model.
+    comments = db.relationship('Comments', backref = 'comments', lazy = 'dynamic')
+
     def save_blog(self):
         db.session.add(self)
         db.session.commit()
@@ -70,3 +75,24 @@ class Blog(db.Model):
 
     def __repr__(self):
         return f"Blog Posts {self.description}','{self.postedDate}')"
+
+class Comments(db.Model):
+
+    __tablename__ = 'comments'
+
+    id = db.Column(db.Integer,primary_key = True)
+    comment = db.Column(db.String)
+    postedDate = db.Column(db.DateTime,default=datetime.now)
+    #Create Foreign key column where we store the id of the Blog Post to be commented on
+    blog_id = db.Column(db.Integer,db.ForeignKey("blogposts.id"))
+    #Create Foreign key column where we store the id of the user that commented on the Blog Post
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    @classmethod
+    def get_comments(cls,id):
+        comments = Comments.query.filter_by(blog_id=id).all()
+        return comments
